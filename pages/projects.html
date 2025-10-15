@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Портфолио — Линейный стиль</title>
+<link rel="stylesheet" href="../styles/styles.css">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+
+</head>
+<body>
+  <header class="site-header ascii-frame">
+  <div class="container">
+    <div class="brand">
+      <a class="brand-link" href="../index.html">PORTFOLIO_</a>
+      <span class="brand-meta">| ascii-wireframe |</span>
+    </div>
+    <nav class="main-nav">
+      <a href="../pages/projects.html" class="nav-link" data-nav="projects">Проекты</a>
+      <a href="../pages/diary.html" class="nav-link" data-nav="diary">Дневник</a>
+      <a href="../pages/contacts.html" class="nav-link" data-nav="contacts">Контакты</a>
+    </nav>
+  </div>
+</header>
+
+  <main class="container">
+    <section class="ascii-frame">
+      <h1>Проекты</h1>
+      <div class="filters">
+        <button class="filter-btn ascii-frame is-active" data-filter="all">Все</button>
+        <button class="filter-btn ascii-frame" data-filter="web">Web</button>
+        <button class="filter-btn ascii-frame" data-filter="ui">UI</button>
+        <button class="filter-btn ascii-frame" data-filter="tools">Tools</button>
+      </div>
+      <div class="grid projects-grid">
+        <!-- Cards -->
+        <article class="card ascii-frame" data-category="web" tabindex="0">
+          <header>Проект A</header>
+          <img src="../images/placeholder.svg" alt="Проект A" class="card-img" />
+          <p>Лэндинг с чистой вёрсткой и модальным окном.</p>
+          <button class="btn ascii-frame open-modal" data-id="a">Открыть</button>
+        </article>
+
+        <article class="card ascii-frame" data-category="ui" tabindex="0">
+          <header>Проект B</header>
+          <img src="../images/placeholder.svg" alt="Проект B" class="card-img" />
+          <p>Компоненты интерфейса в стиле ASCII.</p>
+          <button class="btn ascii-frame open-modal" data-id="b">Открыть</button>
+        </article>
+
+        <article class="card ascii-frame" data-category="tools" tabindex="0">
+          <header>Проект C</header>
+          <img src="../images/placeholder.svg" alt="Проект C" class="card-img" />
+          <p>Мини-инструмент: генератор прогресс-баров в виде [###---].</p>
+          <button class="btn ascii-frame open-modal" data-id="c">Открыть</button>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal -->
+  <div class="modal" id="modal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal__backdrop" data-close></div>
+    <div class="modal__dialog ascii-frame" role="document">
+      <button class="modal__close btn ghost ascii-frame" data-close>×</button>
+      <div class="modal__content">
+        <h2 id="modal-title">Заголовок</h2>
+        <p id="modal-body">Описание проекта.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer ascii-frame">
+  <div class="container">
+    <p>© 2025 — Стиль: «____» и «|». <span aria-hidden="true">[ made with <code>monospace</code> ]</span></p>
+  </div>
+</footer>
+
+  <script src="../scripts/main.js"></script>
+  <script src="../scripts/projects.js"></script>
+</body>
+</html>

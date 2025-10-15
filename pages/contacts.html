@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Портфолио — Линейный стиль</title>
+<link rel="stylesheet" href="../styles/styles.css">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+
+</head>
+<body>
+  <header class="site-header ascii-frame">
+  <div class="container">
+    <div class="brand">
+      <a class="brand-link" href="../index.html">PORTFOLIO_</a>
+      <span class="brand-meta">| ascii-wireframe |</span>
+    </div>
+    <nav class="main-nav">
+      <a href="../pages/projects.html" class="nav-link" data-nav="projects">Проекты</a>
+      <a href="../pages/diary.html" class="nav-link" data-nav="diary">Дневник</a>
+      <a href="../pages/contacts.html" class="nav-link" data-nav="contacts">Контакты</a>
+    </nav>
+  </div>
+</header>
+
+  <main class="container">
+    <section class="ascii-frame">
+      <h1>Контакты</h1>
+      <form class="contact-form ascii-frame" id="contactForm" novalidate>
+        <label class="field">
+          <span>Имя</span>
+          <input type="text" name="name" required minlength="2" placeholder="Ваше имя">
+          <small class="error" aria-live="polite"></small>
+        </label>
+        <label class="field">
+          <span>Email</span>
+          <input type="email" name="email" required placeholder="name@example.com">
+          <small class="error" aria-live="polite"></small>
+        </label>
+        <label class="field">
+          <span>Сообщение</span>
+          <textarea name="message" required minlength="10" rows="5" placeholder="Коротко по делу..."></textarea>
+          <small class="error" aria-live="polite"></small>
+        </label>
+        <button class="btn ascii-frame" type="submit">Отправить</button>
+      </form>
+
+      <div class="toast ascii-frame" id="toast" hidden>
+        <strong>Готово:</strong> форма прошла базовую проверку на клиенте.
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer ascii-frame">
+  <div class="container">
+    <p>© 2025 — Стиль: «____» и «|». <span aria-hidden="true">[ made with <code>monospace</code> ]</span></p>
+  </div>
+</footer>
+
+  <script src="../scripts/main.js"></script>
+  <script src="../scripts/contacts.js"></script>
+</body>
+</html>

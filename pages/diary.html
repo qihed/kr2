@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Портфолио — Линейный стиль</title>
+<link rel="stylesheet" href="../styles/styles.css">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+
+</head>
+<body>
+  <header class="site-header ascii-frame">
+  <div class="container">
+    <div class="brand">
+      <a class="brand-link" href="../index.html">PORTFOLIO_</a>
+      <span class="brand-meta">| ascii-wireframe |</span>
+    </div>
+    <nav class="main-nav">
+      <a href="../pages/projects.html" class="nav-link" data-nav="projects">Проекты</a>
+      <a href="../pages/diary.html" class="nav-link" data-nav="diary">Дневник</a>
+      <a href="../pages/contacts.html" class="nav-link" data-nav="contacts">Контакты</a>
+    </nav>
+  </div>
+</header>
+
+  <main class="container">
+    <section class="ascii-frame">
+      <h1>Дневник</h1>
+
+      <h2>Прогресс</h2>
+      <div class="progress-list">
+        <div class="progress-item ascii-frame">
+          <span>HTML/CSS</span>
+          <output class="ascii-progress" data-value="75">[##############------] 75%</output>
+        </div>
+        <div class="progress-item ascii-frame">
+          <span>JavaScript</span>
+          <output class="ascii-progress" data-value="60">[############--------] 60%</output>
+        </div>
+        <div class="progress-item ascii-frame">
+          <span>Проект</span>
+          <output class="ascii-progress" data-value="40">[########------------] 40%</output>
+        </div>
+      </div>
+
+      <h2>Задачи</h2>
+      <ul class="todo-list ascii-frame" id="todo">
+        <li>
+          <label><input type="checkbox" /> Сверстать «Главную»</label>
+        </li>
+        <li>
+          <label><input type="checkbox" /> Сделать фильтры на «Проектах»</label>
+        </li>
+        <li>
+          <label><input type="checkbox" /> Валидация формы «Контакты»</label>
+        </li>
+      </ul>
+    </section>
+  </main>
+  <footer class="site-footer ascii-frame">
+  <div class="container">
+    <p>© 2025 — Стиль: «____» и «|». <span aria-hidden="true">[ made with <code>monospace</code> ]</span></p>
+  </div>
+</footer>
+
+  <script src="../scripts/main.js"></script>
+  <script src="../scripts/diary.js"></script>
+</body>
+</html>
