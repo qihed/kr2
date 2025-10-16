@@ -1,3 +1,5 @@
+https://qihed.github.io/kr2/pages/diary.html
+
 # Портфолио (ASCII-wireframe): тёмная тема «`_`» и «`|`»
 
 Минималистичный шаблон личного сайта-портфолио в стиле «проводной схемы» (wireframe).
