@@ -1,4 +1,4 @@
-https://qihed.github.io/kr2/pages/diary.html
+https://qihed.github.io/kr2/pages/index.html
 
 # Портфолио (ASCII-wireframe): тёмная тема «`_`» и «`|`»
 
