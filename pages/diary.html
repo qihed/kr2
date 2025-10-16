@@ -1,27 +1,29 @@
 <!doctype html>
 <html lang="ru">
+
 <head>
   <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Портфолио — Линейный стиль</title>
-<link rel="stylesheet" href="../styles/styles.css">
-<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Портфолио — Линейный стиль</title>
+  <link rel="stylesheet" href="../styles/styles.css">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 
 </head>
+
 <body>
   <header class="site-header ascii-frame">
-  <div class="container">
-    <div class="brand">
-      <a class="brand-link" href="../index.html">PORTFOLIO_</a>
-      <span class="brand-meta">| ascii-wireframe |</span>
+    <div class="container">
+      <div class="brand">
+        <a class="brand-link" href="../index.html">PORTFOLIO_</a>
+        <span class="brand-meta">| ascii-wireframe |</span>
+      </div>
+      <nav class="main-nav">
+        <a href="../pages/projects.html" class="nav-link" data-nav="projects">Проекты</a>
+        <a href="../pages/diary.html" class="nav-link" data-nav="diary">Дневник</a>
+        <a href="../pages/contacts.html" class="nav-link" data-nav="contacts">Контакты</a>
+      </nav>
     </div>
-    <nav class="main-nav">
-      <a href="../pages/projects.html" class="nav-link" data-nav="projects">Проекты</a>
-      <a href="../pages/diary.html" class="nav-link" data-nav="diary">Дневник</a>
-      <a href="../pages/contacts.html" class="nav-link" data-nav="contacts">Контакты</a>
-    </nav>
-  </div>
-</header>
+  </header>
 
   <main class="container">
     <section class="ascii-frame">
@@ -44,6 +46,11 @@
       </div>
 
       <h2>Задачи</h2>
+
+      <div class="todo-actions" style="margin: .5rem 0 1rem">
+        <button type="button" class="btn ascii-frame" id="addTaskBtn">Добавить запись</button>
+      </div>
+
       <ul class="todo-list ascii-frame" id="todo">
         <li>
           <label><input type="checkbox" /> Сверстать «Главную»</label>
@@ -55,15 +62,45 @@
           <label><input type="checkbox" /> Валидация формы «Контакты»</label>
         </li>
       </ul>
+
     </section>
   </main>
   <footer class="site-footer ascii-frame">
-  <div class="container">
-    <p>© 2025 — Стиль: «____» и «|». <span aria-hidden="true">[ made with <code>monospace</code> ]</span></p>
-  </div>
-</footer>
+    <div class="container">
+      <p>© 2025 — Стиль: «____» и «|». <span aria-hidden="true">[ made with <code>monospace</code> ]</span></p>
+    </div>
+  </footer>
 
+  <!-- Модальное окно "Добавить задачу" -->
+   <div class="modal" id="addTaskModal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal__backdrop" data-close></div>
+    <div class="modal__dialog ascii-frame" role="document">
+      <button class="modal__close btn ghost ascii-frame" data-close>×</button>
+      <div class="modal__content">
+        <h2>Новая задача</h2>
+        <form id="addTaskForm">
+          <label class="field">
+            <span>Текст задачи</span>
+            <input type="text" name="text" required minlength="2" placeholder="Например: Сделать фильтры...">
+            <small class="error" aria-live="polite"></small>
+          </label>
+
+          <label class="field" style="display:inline-flex; align-items:center; gap:.6rem">
+            <span>Отметить выполненной</span>
+            <input type="checkbox" name="done">
+          </label>
+
+          <div class="dialog-actions" style="display:flex; gap:.6rem; margin-top:.6rem">
+            <button type="submit" class="btn ascii-frame">Добавить</button>
+            <button type="button" class="btn ghost ascii-frame" data-close>Отмена</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
   <script src="../scripts/main.js"></script>
   <script src="../scripts/diary.js"></script>
+  
 </body>
+
 </html>
