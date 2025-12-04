@@ -18,8 +18,9 @@
       <a class="brand-link" href="../index.html">PORTFOLIO_</a>
       <span class="brand-meta">| ascii-wireframe |</span>
     </div>
-    <nav class="main-nav">
-      <a href="../pages/projects.html" class="nav-link" data-nav="projects">Проекты</a>
+    <!-- NEW: Практика 17 - семантическая навигация с aria-label и aria-current -->
+    <nav class="main-nav" aria-label="Основная навигация">
+      <a href="../pages/projects.html" class="nav-link" data-nav="projects" aria-current="page">Проекты</a>
       <a href="../pages/diary.html" class="nav-link" data-nav="diary">Дневник</a>
       <a href="../pages/contacts.html" class="nav-link" data-nav="contacts">Контакты</a>
     </nav>
@@ -43,11 +44,19 @@
         <!-- Cards -->
         <article class="card ascii-frame" data-category="web" tabindex="0">
           <header>Проект A</header>
-          <!-- NEW: responsive card image via picture/srcset to cut layout shifts -->
-          <!-- sizes указывает браузеру, какой размер изображения загружать в зависимости от viewport -->
+          <!-- NEW: Практика 16 - picture с WebP/JPEG и разными изображениями под брейкпоинты -->
           <picture>
-            <source srcset="../images/placeholder.svg 320w, ../images/placeholder.svg 480w, ../images/placeholder.svg 720w" sizes="(min-width: 900px) 320px, (min-width: 600px) 45vw, 90vw">
-            <!-- NEW: width/height заданы для предотвращения CLS (Cumulative Layout Shift) -->
+            <!-- NEW: WebP формат с разными размерами под брейкпоинты 768px и 1200px -->
+            <source 
+              type="image/webp"
+              srcset="../images/placeholder.svg 320w, ../images/placeholder.svg 480w, ../images/placeholder.svg 720w"
+              sizes="(min-width: 1200px) 320px, (min-width: 768px) 45vw, 90vw">
+            <!-- NEW: JPEG fallback -->
+            <source 
+              type="image/jpeg"
+              srcset="../images/placeholder.svg 320w, ../images/placeholder.svg 480w, ../images/placeholder.svg 720w"
+              sizes="(min-width: 1200px) 320px, (min-width: 768px) 45vw, 90vw">
+            <!-- NEW: SVG fallback с width/height для предотвращения CLS -->
             <img src="../images/placeholder.svg" width="640" height="360" alt="Проект A" class="card-img" loading="lazy" />
           </picture>
           <p>Лэндинг с чистой вёрсткой и модальным окном.</p>
@@ -56,10 +65,16 @@
 
         <article class="card ascii-frame" data-category="ui" tabindex="0">
           <header>Проект B</header>
-          <!-- NEW: responsive image with srcset/sizes for adaptive loading -->
+          <!-- NEW: Практика 16 - picture с WebP/JPEG -->
           <picture>
-            <source srcset="../images/placeholder.svg 320w, ../images/placeholder.svg 480w, ../images/placeholder.svg 720w" sizes="(min-width: 900px) 320px, (min-width: 600px) 45vw, 90vw">
-            <!-- NEW: width/height для предотвращения CLS -->
+            <source 
+              type="image/webp"
+              srcset="../images/placeholder.svg 320w, ../images/placeholder.svg 480w, ../images/placeholder.svg 720w"
+              sizes="(min-width: 1200px) 320px, (min-width: 768px) 45vw, 90vw">
+            <source 
+              type="image/jpeg"
+              srcset="../images/placeholder.svg 320w, ../images/placeholder.svg 480w, ../images/placeholder.svg 720w"
+              sizes="(min-width: 1200px) 320px, (min-width: 768px) 45vw, 90vw">
             <img src="../images/placeholder.svg" width="640" height="360" alt="Проект B" class="card-img" loading="lazy" />
           </picture>
           <p>Компоненты интерфейса в стиле ASCII.</p>
@@ -68,11 +83,16 @@
 
         <article class="card ascii-frame" data-category="tools" tabindex="0">
           <header>Проект C</header>
-          <!-- NEW: responsive image with srcset/sizes for adaptive loading -->
-          <!-- Браузер выберет оптимальный размер изображения на основе sizes и viewport -->
+          <!-- NEW: Практика 16 - picture с WebP/JPEG -->
           <picture>
-            <source srcset="../images/placeholder.svg 320w, ../images/placeholder.svg 480w, ../images/placeholder.svg 720w" sizes="(min-width: 900px) 320px, (min-width: 600px) 45vw, 90vw">
-            <!-- NEW: width/height для предотвращения CLS -->
+            <source 
+              type="image/webp"
+              srcset="../images/placeholder.svg 320w, ../images/placeholder.svg 480w, ../images/placeholder.svg 720w"
+              sizes="(min-width: 1200px) 320px, (min-width: 768px) 45vw, 90vw">
+            <source 
+              type="image/jpeg"
+              srcset="../images/placeholder.svg 320w, ../images/placeholder.svg 480w, ../images/placeholder.svg 720w"
+              sizes="(min-width: 1200px) 320px, (min-width: 768px) 45vw, 90vw">
             <img src="../images/placeholder.svg" width="640" height="360" alt="Проект C" class="card-img" loading="lazy" />
           </picture>
           <p>Мини-инструмент: генератор прогресс-баров в виде [###---].</p>
@@ -82,11 +102,13 @@
     </section>
   </main>
 
-  <!-- Modal -->
-  <div class="modal" id="modal" aria-hidden="true" role="dialog" aria-modal="true">
-    <div class="modal__backdrop" data-close></div>
+  <!-- NEW: Практика 17 - модалка с правильной семантикой и управлением фокусом -->
+  <div class="modal" id="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <!-- NEW: Практика 17 - backdrop скрыт от screen readers через aria-hidden -->
+    <div class="modal__backdrop" data-close aria-hidden="true"></div>
     <div class="modal__dialog ascii-frame" role="document">
-      <button class="modal__close btn ghost ascii-frame" data-close>×</button>
+      <!-- NEW: Практика 17 - кнопка закрытия с aria-label для доступности -->
+      <button class="modal__close btn ghost ascii-frame" data-close aria-label="Закрыть диалог">×</button>
       <div class="modal__content">
         <h2 id="modal-title">Заголовок</h2>
         <p id="modal-body">Описание проекта.</p>

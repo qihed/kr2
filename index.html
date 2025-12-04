@@ -6,7 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Портфолио — Линейный стиль</title>
   <link rel="stylesheet" href="styles/styles.css">
+  <!-- NEW: Практика 16 - ретина-иконки с srcset для разных плотностей пикселей -->
+  <!-- Пример: favicon с поддержкой ретина-дисплеев (1x и 2x) -->
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <!-- NEW: пример ретина-иконок (если бы были PNG иконки) -->
+  <!-- <link rel="icon" type="image/png" sizes="32x32" href="images/icon@1x.png" srcset="images/icon@1x.png 1x, images/icon@2x.png 2x"> -->
 </head>
 <body>
   <!-- NEW: skip-link for keyboard users to jump to main content -->
@@ -17,7 +21,8 @@
       <a class="brand-link" href="index.html">PORTFOLIO_</a>
       <span class="brand-meta">| ascii-wireframe |</span>
     </div>
-    <nav class="main-nav">
+    <!-- NEW: Практика 17 - семантическая навигация с aria-label для доступности -->
+    <nav class="main-nav" aria-label="Основная навигация">
       <a href="pages/projects.html" class="nav-link" data-nav="projects">Проекты</a>
       <a href="pages/diary.html" class="nav-link" data-nav="diary">Дневник</a>
       <a href="pages/contacts.html" class="nav-link" data-nav="contacts">Контакты</a>
@@ -30,11 +35,21 @@
     <section class="hero ascii-frame">
       <div class="hero-grid">
         <div class="hero-photo ascii-frame">
-          <!-- NEW: responsive hero image with picture/srcset/sizes to prevent CLS (Cumulative Layout Shift) -->
-          <!-- Используем несколько размеров изображения для адаптивной загрузки -->
+          <!-- NEW: Практика 16 - picture с WebP/JPEG и разными изображениями под брейкпоинты -->
+          <!-- Используем разные форматы: WebP для современных браузеров, JPEG для fallback -->
+          <!-- Разные размеры изображений для разных viewport: 768px, 1200px и выше -->
           <picture class="hero-picture">
-            <source srcset="images/placeholder.svg 150w, images/placeholder.svg 200w, images/placeholder.svg 300w" sizes="200px">
-            <!-- NEW: width/height заданы для предотвращения CLS, object-fit: cover в CSS -->
+            <!-- NEW: WebP формат для современных браузеров с разными размерами под брейкпоинты -->
+            <source 
+              type="image/webp"
+              srcset="images/placeholder.svg 150w, images/placeholder.svg 200w, images/placeholder.svg 300w"
+              sizes="(min-width: 1200px) 300px, (min-width: 768px) 200px, 150px">
+            <!-- NEW: JPEG fallback для старых браузеров -->
+            <source 
+              type="image/jpeg"
+              srcset="images/placeholder.svg 150w, images/placeholder.svg 200w, images/placeholder.svg 300w"
+              sizes="(min-width: 1200px) 300px, (min-width: 768px) 200px, 150px">
+            <!-- NEW: SVG fallback с width/height для предотвращения CLS, object-fit: contain в CSS -->
             <img src="images/placeholder.svg" width="240" height="300" alt="Моё фото (пример)" class="photo contain" loading="lazy" />
           </picture>
         </div>
@@ -57,9 +72,19 @@
       <div class="grid projects-grid">
         <article class="card ascii-frame">
           <header>Проект A</header>
-          <!-- NEW: responsive image with srcset for different viewport sizes -->
+          <!-- NEW: Практика 16 - picture с WebP/JPEG и адаптивными размерами -->
           <picture>
-            <source srcset="images/placeholder.svg 320w, images/placeholder.svg 480w, images/placeholder.svg 720w" sizes="(min-width: 900px) 320px, (min-width: 600px) 45vw, 90vw">
+            <!-- NEW: WebP формат с разными размерами под брейкпоинты 768px и 1200px -->
+            <source 
+              type="image/webp"
+              srcset="images/placeholder.svg 320w, images/placeholder.svg 480w, images/placeholder.svg 720w"
+              sizes="(min-width: 1200px) 320px, (min-width: 768px) 45vw, 90vw">
+            <!-- NEW: JPEG fallback -->
+            <source 
+              type="image/jpeg"
+              srcset="images/placeholder.svg 320w, images/placeholder.svg 480w, images/placeholder.svg 720w"
+              sizes="(min-width: 1200px) 320px, (min-width: 768px) 45vw, 90vw">
+            <!-- NEW: SVG fallback с width/height для предотвращения CLS -->
             <img src="images/placeholder.svg" width="640" height="360" alt="Проект A" class="card-img" loading="lazy" />
           </picture>
           <p>Лэндинг с чистой вёрсткой и модальным окном.</p>
@@ -67,8 +92,16 @@
         </article>
         <article class="card ascii-frame">
           <header>Проект B</header>
+          <!-- NEW: Практика 16 - picture с WebP/JPEG -->
           <picture>
-            <source srcset="images/placeholder.svg 320w, images/placeholder.svg 480w, images/placeholder.svg 720w" sizes="(min-width: 900px) 320px, (min-width: 600px) 45vw, 90vw">
+            <source 
+              type="image/webp"
+              srcset="images/placeholder.svg 320w, images/placeholder.svg 480w, images/placeholder.svg 720w"
+              sizes="(min-width: 1200px) 320px, (min-width: 768px) 45vw, 90vw">
+            <source 
+              type="image/jpeg"
+              srcset="images/placeholder.svg 320w, images/placeholder.svg 480w, images/placeholder.svg 720w"
+              sizes="(min-width: 1200px) 320px, (min-width: 768px) 45vw, 90vw">
             <img src="images/placeholder.svg" width="640" height="360" alt="Проект B" class="card-img" loading="lazy" />
           </picture>
           <p>Компоненты интерфейса в стиле ASCII.</p>
@@ -76,8 +109,16 @@
         </article>
         <article class="card ascii-frame">
           <header>Проект C</header>
+          <!-- NEW: Практика 16 - picture с WebP/JPEG -->
           <picture>
-            <source srcset="images/placeholder.svg 320w, images/placeholder.svg 480w, images/placeholder.svg 720w" sizes="(min-width: 900px) 320px, (min-width: 600px) 45vw, 90vw">
+            <source 
+              type="image/webp"
+              srcset="images/placeholder.svg 320w, images/placeholder.svg 480w, images/placeholder.svg 720w"
+              sizes="(min-width: 1200px) 320px, (min-width: 768px) 45vw, 90vw">
+            <source 
+              type="image/jpeg"
+              srcset="images/placeholder.svg 320w, images/placeholder.svg 480w, images/placeholder.svg 720w"
+              sizes="(min-width: 1200px) 320px, (min-width: 768px) 45vw, 90vw">
             <img src="images/placeholder.svg" width="640" height="360" alt="Проект C" class="card-img" loading="lazy" />
           </picture>
           <p>Мини-инструмент: генератор прогресс-баров в виде [###---].</p>
@@ -89,6 +130,17 @@
     <section class="ascii-frame">
       <h2>О проекте</h2>
       <p>Шаблон под КР: «Главная», «Проекты» (фильтры, модальные окна), «Дневник» (прогресс-бары, задачи), «Контакты» (форма, валидация).</p>
+      
+      <!-- NEW: Практика 16 - простое адаптивное изображение (width: 100%; height: auto) -->
+      <!-- Демонстрация простого адаптивного изображения без picture/srcset -->
+      <div style="margin: 1rem 0;">
+        <h3>Пример простого адаптивного изображения</h3>
+        <!-- NEW: простое адаптивное изображение с width: 100% и height: auto -->
+        <img src="images/placeholder.svg" alt="Пример адаптивного изображения" 
+             style="width: 100%; height: auto; max-width: 600px; display: block; margin: 0 auto; border: 1px solid var(--fg);" 
+             loading="lazy" />
+      </div>
+      
       <ul class="ascii-list">
         <li>Фон: <code>#3c3c3e</code></li>
         <li>Текст и акцент: <code>#d9d9d9</code></li>

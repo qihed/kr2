@@ -136,10 +136,20 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   background: #2e2e2f;
   border: 2px solid var(--fg);
   display:block;
+  /* NEW: Практика 16 - object-fit: cover для заполнения контейнера с обрезкой */
   object-fit: cover;
   object-position: 50% 50%;
 }
-.photo.contain{ object-fit: contain; background:#2a2a2b; }
+/* NEW: Практика 16 - разные варианты object-fit для демонстрации */
+.photo.contain{ 
+  /* NEW: object-fit: contain - вписывает изображение целиком без обрезки */
+  object-fit: contain; 
+  background:#2a2a2b; 
+}
+.photo.fill{ 
+  /* NEW: object-fit: fill - растягивает изображение на весь контейнер (может исказить пропорции) */
+  object-fit: fill; 
+}
 
 .hero-actions{display:flex; gap:.75rem; flex-wrap:wrap}
 
@@ -188,14 +198,16 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 }
 
 .card header{font-weight:700; margin-bottom:.5rem}
-/* NEW: изображения карточек с aspect-ratio для предотвращения CLS */
-/* object-fit: cover обеспечивает заполнение контейнера без искажений */
+/* NEW: Практика 16 - изображения карточек с aspect-ratio для предотвращения CLS */
+/* NEW: object-fit: cover обеспечивает заполнение контейнера с обрезкой без искажений */
 .card-img{
   width:100%; 
+  height: auto; /* NEW: Практика 16 - height: auto для адаптивности */
   aspect-ratio: 16/9; 
   background:#2e2e2f; 
   border:1px solid var(--fg); 
   object-fit: cover;
+  display: block; /* NEW: убираем лишние отступы снизу */
 }
 
 .filters{display:flex; gap:.5rem; margin-bottom:var(--gap)}
@@ -217,8 +229,42 @@ input, textarea{
   border:2px solid var(--fg);
   padding:.5rem .6rem;
 }
-.error{color:var(--fg); opacity:.8; min-height:1.2em}
+/* NEW: Практика 17 - стили для подсказок (hints) */
+.hint{
+  color:var(--muted); 
+  font-size:.9rem; 
+  min-height:1.2em;
+}
+/* NEW: Практика 17 - стили для сообщений об ошибках */
+.error{
+  color:var(--fg); 
+  opacity:.8; 
+  min-height:1.2em;
+  font-weight:600;
+}
 label > span{font-weight:600}
+/* NEW: Практика 17 - скрытый текст для screen readers (sr-only) */
+.sr-only{
+  position:absolute;
+  width:1px;
+  height:1px;
+  padding:0;
+  margin:-1px;
+  overflow:hidden;
+  clip:rect(0,0,0,0);
+  white-space:nowrap;
+  border-width:0;
+}
+/* NEW: Практика 17 - стили для fieldset и legend */
+fieldset{
+  border:2px solid var(--fg);
+  padding:1rem;
+  margin:0 0 1rem 0;
+}
+legend{
+  padding:0 .5rem;
+  font-weight:600;
+}
 
 input:not([type="checkbox"]):not([type="radio"]), textarea { width: 100%; }
 

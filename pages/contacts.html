@@ -18,10 +18,11 @@
       <a class="brand-link" href="../index.html">PORTFOLIO_</a>
       <span class="brand-meta">| ascii-wireframe |</span>
     </div>
-    <nav class="main-nav">
+    <!-- NEW: Практика 17 - семантическая навигация с aria-label для доступности -->
+    <nav class="main-nav" aria-label="Основная навигация">
       <a href="../pages/projects.html" class="nav-link" data-nav="projects">Проекты</a>
       <a href="../pages/diary.html" class="nav-link" data-nav="diary">Дневник</a>
-      <a href="../pages/contacts.html" class="nav-link" data-nav="contacts">Контакты</a>
+      <a href="../pages/contacts.html" class="nav-link" data-nav="contacts" aria-current="page">Контакты</a>
     </nav>
   </div>
 </header>
@@ -31,29 +32,70 @@
   <main class="container" id="main" tabindex="-1">
     <section class="ascii-frame">
       <h1>Контакты</h1>
-      <form class="contact-form ascii-frame" id="contactForm" novalidate>
-        <!-- NEW: proper label with for/id binding for accessibility -->
-        <label class="field" for="contact-name">
-          <span>Имя</span>
-          <input type="text" id="contact-name" name="name" required minlength="2" placeholder="Ваше имя">
-          <!-- NEW: error message with role="alert" for screen readers -->
-          <small class="error" role="alert" aria-live="polite"></small>
-        </label>
-        <!-- NEW: label с for/id для связи с полем email -->
-        <label class="field" for="contact-email">
-          <span>Email</span>
-          <input type="email" id="contact-email" name="email" required placeholder="name@example.com">
-          <!-- NEW: сообщение об ошибке с role="alert" для доступности -->
-          <small class="error" role="alert" aria-live="polite"></small>
-        </label>
-        <!-- NEW: label с for/id для связи с полем сообщения -->
-        <label class="field" for="contact-message">
-          <span>Сообщение</span>
-          <textarea id="contact-message" name="message" required minlength="10" rows="5" placeholder="Коротко по делу..."></textarea>
-          <!-- NEW: сообщение об ошибке с role="alert" для доступности -->
-          <small class="error" role="alert" aria-live="polite"></small>
-        </label>
-        <button class="btn ascii-frame" type="submit">Отправить</button>
+      <!-- NEW: Практика 17 - семантическая форма с fieldset и legend -->
+      <form class="contact-form ascii-frame" id="contactForm" novalidate aria-label="Форма обратной связи">
+        <!-- NEW: fieldset для группировки полей формы, legend для описания группы -->
+        <fieldset>
+          <legend class="sr-only">Контактная информация</legend>
+          
+          <!-- NEW: Практика 17 - proper label with for/id binding и aria-describedby для подсказок -->
+          <label class="field" for="contact-name">
+            <span>Имя <abbr title="обязательное поле" aria-label="обязательное поле">*</abbr></span>
+            <input 
+              type="text" 
+              id="contact-name" 
+              name="name" 
+              required 
+              minlength="2" 
+              placeholder="Ваше имя"
+              aria-required="true"
+              aria-describedby="name-hint name-error">
+            <!-- NEW: Практика 17 - подсказка (hint) с aria-describedby -->
+            <small id="name-hint" class="hint">Минимум 2 символа</small>
+            <!-- NEW: Практика 17 - сообщение об ошибке с role="alert" и aria-describedby -->
+            <small id="name-error" class="error" role="alert" aria-live="polite"></small>
+          </label>
+          
+          <!-- NEW: Практика 17 - label с for/id, aria-describedby для подсказок и ошибок -->
+          <label class="field" for="contact-email">
+            <span>Email <abbr title="обязательное поле" aria-label="обязательное поле">*</abbr></span>
+            <input 
+              type="email" 
+              id="contact-email" 
+              name="email" 
+              required 
+              placeholder="name@example.com"
+              aria-required="true"
+              aria-describedby="email-hint email-error">
+            <!-- NEW: Практика 17 - подсказка для поля email -->
+            <small id="email-hint" class="hint">Введите корректный email адрес</small>
+            <!-- NEW: Практика 17 - сообщение об ошибке -->
+            <small id="email-error" class="error" role="alert" aria-live="polite"></small>
+          </label>
+          
+          <!-- NEW: Практика 17 - label с for/id для textarea -->
+          <label class="field" for="contact-message">
+            <span>Сообщение <abbr title="обязательное поле" aria-label="обязательное поле">*</abbr></span>
+            <textarea 
+              id="contact-message" 
+              name="message" 
+              required 
+              minlength="10" 
+              rows="5" 
+              placeholder="Коротко по делу..."
+              aria-required="true"
+              aria-describedby="message-hint message-error"></textarea>
+            <!-- NEW: Практика 17 - подсказка для сообщения -->
+            <small id="message-hint" class="hint">Минимум 10 символов</small>
+            <!-- NEW: Практика 17 - сообщение об ошибке -->
+            <small id="message-error" class="error" role="alert" aria-live="polite"></small>
+          </label>
+        </fieldset>
+        
+        <!-- NEW: Практика 17 - кнопка отправки с явным type="submit" -->
+        <button class="btn ascii-frame" type="submit" aria-label="Отправить форму обратной связи">
+          Отправить
+        </button>
       </form>
 
       <div class="toast ascii-frame" id="toast" hidden>

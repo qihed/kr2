@@ -3,17 +3,29 @@
   const toast = document.getElementById('toast');
   if (!form) return;
 
-  // NEW: функция показа ошибок с установкой aria-invalid для доступности
+  // NEW: Практика 17 - функция показа ошибок с установкой aria-invalid и aria-describedby
   function showError(input, msg){
-    const small = input.closest('.field').querySelector('.error');
+    // NEW: находим элемент ошибки по id (name-error, email-error, message-error)
+    const fieldName = input.id.replace('contact-', '');
+    const errorId = fieldName + '-error';
+    const hintId = fieldName + '-hint';
+    const small = document.getElementById(errorId);
+    
     if (small) {
       small.textContent = msg || '';
     }
-    // NEW: установка aria-invalid для screen readers
+    // NEW: Практика 17 - установка aria-invalid для screen readers
     if (msg) {
       input.setAttribute('aria-invalid', 'true');
+      // NEW: добавляем aria-describedby для связи с подсказкой и сообщением об ошибке
+      // Формат: "hint-id error-id" или просто "error-id" если нет подсказки
+      const describedBy = hintId + ' ' + errorId;
+      input.setAttribute('aria-describedby', describedBy);
     } else {
       input.removeAttribute('aria-invalid');
+      // NEW: при успешной валидации оставляем только подсказку в aria-describedby
+      const describedBy = hintId;
+      input.setAttribute('aria-describedby', describedBy);
     }
   }
 

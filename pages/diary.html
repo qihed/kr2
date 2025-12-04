@@ -20,9 +20,10 @@
         <a class="brand-link" href="../index.html">PORTFOLIO_</a>
         <span class="brand-meta">| ascii-wireframe |</span>
       </div>
-      <nav class="main-nav">
+      <!-- NEW: Практика 17 - семантическая навигация с aria-label и aria-current -->
+      <nav class="main-nav" aria-label="Основная навигация">
         <a href="../pages/projects.html" class="nav-link" data-nav="projects">Проекты</a>
-        <a href="../pages/diary.html" class="nav-link" data-nav="diary">Дневник</a>
+        <a href="../pages/diary.html" class="nav-link" data-nav="diary" aria-current="page">Дневник</a>
         <a href="../pages/contacts.html" class="nav-link" data-nav="contacts">Контакты</a>
       </nav>
     </div>
@@ -76,13 +77,15 @@
     </div>
   </footer>
 
-  <!-- Модальное окно "Добавить задачу" -->
-   <div class="modal" id="addTaskModal" aria-hidden="true" role="dialog" aria-modal="true">
-    <div class="modal__backdrop" data-close></div>
+  <!-- NEW: Практика 17 - модальное окно с правильной семантикой и управлением фокусом -->
+  <div class="modal" id="addTaskModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="add-task-title">
+    <!-- NEW: Практика 17 - backdrop скрыт от screen readers -->
+    <div class="modal__backdrop" data-close aria-hidden="true"></div>
     <div class="modal__dialog ascii-frame" role="document">
-      <button class="modal__close btn ghost ascii-frame" data-close>×</button>
+      <!-- NEW: Практика 17 - кнопка закрытия с aria-label -->
+      <button class="modal__close btn ghost ascii-frame" data-close aria-label="Закрыть диалог добавления задачи">×</button>
       <div class="modal__content">
-        <h2>Новая задача</h2>
+        <h2 id="add-task-title">Новая задача</h2>
         <form id="addTaskForm">
           <!-- NEW: proper label with for/id binding for accessibility -->
           <label class="field" for="task-text">
@@ -100,8 +103,9 @@
           </label>
 
           <div class="dialog-actions" style="display:flex; gap:.6rem; margin-top:.6rem">
+            <!-- NEW: Практика 17 - кнопки с явными типами и aria-label где нужно -->
             <button type="submit" class="btn ascii-frame">Добавить</button>
-            <button type="button" class="btn ghost ascii-frame" data-close>Отмена</button>
+            <button type="button" class="btn ghost ascii-frame" data-close aria-label="Отменить добавление задачи">Отмена</button>
           </div>
         </form>
       </div>

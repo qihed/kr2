@@ -62,18 +62,65 @@
     }
   });
 
-  // ---- диалог ----
+  // NEW: Практика 17 - диалог с управлением фокусом для доступности
+  let previousFocus = null; // NEW: сохраняем элемент, который имел фокус до открытия модалки
+  
   const open = () => {
     if (!modal || !form) return;
     modal.setAttribute('aria-hidden', 'false');
     form.reset();
+    
+    // NEW: Практика 17 - сохраняем текущий фокус
+    previousFocus = document.activeElement;
+    
+    // NEW: Практика 17 - перемещаем фокус в первое поле формы
     form.elements.text?.focus();
+    
+    // NEW: Практика 17 - блокируем прокрутку фона
+    document.body.style.overflow = 'hidden';
+    const backdrop = modal.querySelector('.modal__backdrop');
+    if (backdrop) {
+      backdrop.setAttribute('aria-hidden', 'true');
+    }
   };
-  const close = () => modal?.setAttribute('aria-hidden', 'true');
+  
+  const close = () => {
+    if (!modal) return;
+    modal.setAttribute('aria-hidden', 'true');
+    
+    // NEW: Практика 17 - возвращаем фокус на элемент, который открыл модалку
+    if (previousFocus) {
+      previousFocus.focus();
+      previousFocus = null;
+    }
+    
+    // NEW: Практика 17 - возвращаем прокрутку
+    document.body.style.overflow = '';
+  };
 
   openBtn?.addEventListener('click', open);
   modal?.addEventListener('click', (e) => { if (e.target.hasAttribute('data-close')) close(); });
-  window.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+  
+  // NEW: Практика 17 - закрытие по Escape и ловушка фокуса внутри модалки
+  window.addEventListener('keydown', (e) => { 
+    if (e.key === 'Escape' && modal?.getAttribute('aria-hidden') === 'false') {
+      close();
+    }
+    // NEW: ловушка фокуса - если Tab в начале модалки, переходим в конец
+    if (e.key === 'Tab' && modal?.getAttribute('aria-hidden') === 'false') {
+      const focusableElements = modal.querySelectorAll('button, [href], input, textarea, select, [tabindex]:not([tabindex="-1"])');
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+      
+      if (e.shiftKey && document.activeElement === firstElement) {
+        e.preventDefault();
+        lastElement?.focus();
+      } else if (!e.shiftKey && document.activeElement === lastElement) {
+        e.preventDefault();
+        firstElement?.focus();
+      }
+    }
+  });
 
   form?.addEventListener('submit', (e) => {
     e.preventDefault();
