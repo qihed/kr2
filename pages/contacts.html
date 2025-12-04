@@ -2,13 +2,16 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Портфолио — Линейный стиль</title>
+  <!-- NEW: viewport with viewport-fit=cover for safe-area support on devices with notches -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Портфолио — Линейный стиль</title>
 <link rel="stylesheet" href="../styles/styles.css">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 
 </head>
 <body>
+  <!-- NEW: skip-link for keyboard users to jump to main content -->
+  <a class="skip-link" href="#main">Перейти к основному содержанию</a>
   <header class="site-header ascii-frame">
   <div class="container">
     <div class="brand">
@@ -23,24 +26,32 @@
   </div>
 </header>
 
-  <main class="container">
+  <!-- NEW: main с id="main" и tabindex="-1" для навигации через skip-link -->
+  <!-- tabindex="-1" позволяет программно установить фокус через skip-link -->
+  <main class="container" id="main" tabindex="-1">
     <section class="ascii-frame">
       <h1>Контакты</h1>
       <form class="contact-form ascii-frame" id="contactForm" novalidate>
-        <label class="field">
+        <!-- NEW: proper label with for/id binding for accessibility -->
+        <label class="field" for="contact-name">
           <span>Имя</span>
-          <input type="text" name="name" required minlength="2" placeholder="Ваше имя">
-          <small class="error" aria-live="polite"></small>
+          <input type="text" id="contact-name" name="name" required minlength="2" placeholder="Ваше имя">
+          <!-- NEW: error message with role="alert" for screen readers -->
+          <small class="error" role="alert" aria-live="polite"></small>
         </label>
-        <label class="field">
+        <!-- NEW: label с for/id для связи с полем email -->
+        <label class="field" for="contact-email">
           <span>Email</span>
-          <input type="email" name="email" required placeholder="name@example.com">
-          <small class="error" aria-live="polite"></small>
+          <input type="email" id="contact-email" name="email" required placeholder="name@example.com">
+          <!-- NEW: сообщение об ошибке с role="alert" для доступности -->
+          <small class="error" role="alert" aria-live="polite"></small>
         </label>
-        <label class="field">
+        <!-- NEW: label с for/id для связи с полем сообщения -->
+        <label class="field" for="contact-message">
           <span>Сообщение</span>
-          <textarea name="message" required minlength="10" rows="5" placeholder="Коротко по делу..."></textarea>
-          <small class="error" aria-live="polite"></small>
+          <textarea id="contact-message" name="message" required minlength="10" rows="5" placeholder="Коротко по делу..."></textarea>
+          <!-- NEW: сообщение об ошибке с role="alert" для доступности -->
+          <small class="error" role="alert" aria-live="polite"></small>
         </label>
         <button class="btn ascii-frame" type="submit">Отправить</button>
       </form>

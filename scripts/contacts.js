@@ -3,9 +3,18 @@
   const toast = document.getElementById('toast');
   if (!form) return;
 
+  // NEW: функция показа ошибок с установкой aria-invalid для доступности
   function showError(input, msg){
     const small = input.closest('.field').querySelector('.error');
-    small.textContent = msg || '';
+    if (small) {
+      small.textContent = msg || '';
+    }
+    // NEW: установка aria-invalid для screen readers
+    if (msg) {
+      input.setAttribute('aria-invalid', 'true');
+    } else {
+      input.removeAttribute('aria-invalid');
+    }
   }
 
   function validate(){

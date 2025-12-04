@@ -79,12 +79,21 @@
     e.preventDefault();
     const text = form.elements.text.value.trim();
     const done = form.elements.done.checked;
-    const err = form.querySelector('.error');
+    // NEW: поиск элемента ошибки через closest для правильной работы с новой структурой формы
+    const err = form.querySelector('.field .error');
     if (text.length < 2){
-      if (err) err.textContent = 'Введите текст (≥ 2 символов).';
+      if (err) {
+        err.textContent = 'Введите текст (≥ 2 символов).';
+        // NEW: установка aria-invalid для доступности
+        form.elements.text.setAttribute('aria-invalid', 'true');
+      }
       return;
     }
-    if (err) err.textContent = '';
+    if (err) {
+      err.textContent = '';
+      // NEW: сброс aria-invalid при успешной валидации
+      form.elements.text.removeAttribute('aria-invalid');
+    }
 
     items.push({ text, done });
     save(items);

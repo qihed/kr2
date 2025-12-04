@@ -4,32 +4,112 @@
   --accent:#d9d9d9;
   --muted: #b8b8b8;
   --gap: clamp(8px, 2vw, 16px);
+  /* NEW: safe-area helper for sticky/footer paddings */
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 *{box-sizing:border-box}
-html,body{height:100%}
-html{background:var(--bg); color:var(--fg);}
-body{
-  margin:0;
-  font: 16px/1.6 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+/* NEW: базовый каркас страницы с поддержкой адаптивных единиц измерения */
+/* Используем vh/svh/dvh для корректной работы на разных устройствах */
+html{
+  background:var(--bg); 
+  color:var(--fg); 
+  /* NEW: color-scheme для поддержки светлой/тёмной темы системы */
+  color-scheme: light dark; 
+  min-height:100%;
+  /* NEW: НЕ используем height: 100%, чтобы не мешать sticky работать */
+  /* NEW: убеждаемся, что html прокручивается для работы sticky */
+  overflow-y: auto;
+  overflow-x: hidden;
 }
+body{
+  /* NEW: min-height с fallback через каскад: сначала vh, потом svh (small viewport), потом dvh (dynamic viewport) */
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
+  margin:0;
+  padding:0;
+  font: 16px/1.6 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  /* NEW: flexbox layout для sticky footer */
+  display:flex; 
+  flex-direction:column;
+  /* NEW: НЕ используем height: 100%, так как это может мешать sticky работать */
+  /* Sticky работает относительно прокручиваемого контейнера, поэтому нужен min-height, а не height */
+  /* NEW: убеждаемся, что body не имеет overflow, который мешает sticky */
+  overflow: visible;
+}
+/* NEW: main занимает всё доступное пространство, scroll-margin для skip-link */
+main{flex:1; scroll-margin-top: 80px;}
 
 a{color:var(--accent); text-decoration:none}
 a:hover{text-decoration:underline}
+/* NEW: видимый фокус для всех интерактивных элементов при навигации с клавиатуры */
+/* :focus-visible показывает outline только при фокусе через Tab, а не при клике */
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible{
+  outline:2px solid var(--fg);
+  outline-offset:4px;
+}
+
+/* NEW: skip-link so keyboard users can jump to main */
+.skip-link{
+  position:absolute; left:-999px; top:0;
+  background:var(--bg); color:var(--fg);
+  padding:.75rem 1rem;
+  border:2px solid var(--fg);
+  z-index:100;
+}
+.skip-link:focus-visible{
+  left:calc(50% - 120px);
+  top: calc(var(--gap) + env(safe-area-inset-top));
+}
 
 .container{
-  width:min(1100px, 100% - 2*var(--gap));
+  width:min(1100px, calc(100% - 2*var(--gap)));
   margin-inline:auto;
   padding: calc(var(--gap)*1.25);
 }
 
+/* NEW: общие стили для header и footer (рамки) */
 .site-header, .site-footer{
-  margin-block: var(--gap);
   background:
     linear-gradient(var(--fg),var(--fg)) top left/100% 2px no-repeat,
     linear-gradient(var(--fg),var(--fg)) bottom left/100% 2px no-repeat,
     linear-gradient(90deg,var(--fg),var(--fg)) top left/2px 100% no-repeat,
     linear-gradient(90deg,var(--fg),var(--fg)) top right/2px 100% no-repeat;
+}
+/* NEW: sticky header с учётом safe-area для устройств с вырезами (notch) */
+/* NEW: используем .site-header.ascii-frame для большей специфичности (0,2,0 вместо 0,1,0) */
+/* Это переопределяет position: relative из .ascii-frame без использования !important */
+.site-header.ascii-frame{
+  /* NEW: position: sticky для прилипания к верху при прокрутке */
+  position: sticky;
+  /* NEW: top учитывает safe-area-inset-top для корректного позиционирования на iPhone и других устройствах */
+  top: 0;
+  top: max(0px, env(safe-area-inset-top));
+  /* NEW: z-index для отображения поверх контента */
+  z-index: 100;
+  /* NEW: width: 100% для полного покрытия ширины экрана */
+  width: 100%;
+  /* NEW: padding-top учитывает safe-area для отступа от выреза */
+  padding-top: calc(var(--gap) + env(safe-area-inset-top));
+  /* NEW: background-color должен полностью покрывать header для корректной работы sticky */
+  /* Используем background с градиентами + solid цвет для полного покрытия */
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(var(--fg),var(--fg)) top left/100% 2px no-repeat,
+    linear-gradient(var(--fg),var(--fg)) bottom left/100% 2px no-repeat,
+    linear-gradient(90deg,var(--fg),var(--fg)) top left/2px 100% no-repeat,
+    linear-gradient(90deg,var(--fg),var(--fg)) top right/2px 100% no-repeat;
+  /* NEW: margin-top убираем для sticky, margin-block переопределяем явно */
+  margin-top: 0;
+  margin-bottom: var(--gap);
+  /* NEW: переопределяем margin-block из .ascii-frame для header */
+  margin-block-start: 0;
+  margin-block-end: var(--gap);
+}
+/* NEW: footer имеет обычные отступы */
+.site-footer{
+  margin-block: var(--gap);
 }
 
 .brand{display:flex; align-items:baseline; gap: .75rem}
@@ -37,7 +117,7 @@ a:hover{text-decoration:underline}
 .brand-meta{color:var(--muted); font-size:.9rem}
 
 .main-nav{display:flex; gap:.75rem; flex-wrap:wrap}
-.nav-link{padding:.3rem .6rem; border:1px solid var(--fg)}
+.nav-link{padding:.3rem .75rem; border:1px solid var(--fg); display:inline-flex; align-items:center; justify-content:center; min-height:44px; min-width:44px;}
 .nav-link[aria-current="page"], .nav-link:focus-visible{outline:2px solid var(--fg); outline-offset:2px}
 
 .hero-grid{
@@ -50,6 +130,7 @@ a:hover{text-decoration:underline}
   .hero-grid{grid-template-columns: 1fr}
 }
 
+.hero-picture img{display:block; width:100%; height:100%; object-fit: cover;}
 .photo{
   width:100%; height:100%; aspect-ratio: 4/5;
   background: #2e2e2f;
@@ -63,13 +144,21 @@ a:hover{text-decoration:underline}
 .hero-actions{display:flex; gap:.75rem; flex-wrap:wrap}
 
 .btn{
-  display:inline-block; padding:.6rem .9rem; border:2px solid var(--fg);
+  /* NEW: enlarge tap targets to 44px+ */
+  display:inline-flex; align-items:center; justify-content:center;
+  min-height:44px; min-width:44px;
+  padding:.6rem 1rem; border:2px solid var(--fg);
   background:transparent; color:var(--fg); cursor:pointer;
 }
 .btn.ghost{border-style:dashed}
 .btn:focus-visible{outline:2px solid var(--fg); outline-offset:2px}
+.filter-btn, .modal__close{
+  display:inline-flex; align-items:center; justify-content:center;
+  min-height:44px; min-width:44px;
+}
 
 .ascii-frame{
+  /* NEW: position: relative для обычных элементов, sticky применяется только к .site-header */
   position:relative;
   border:2px solid var(--fg);
   padding: calc(var(--gap)*1.1);
@@ -92,10 +181,22 @@ a:hover{text-decoration:underline}
 .ascii-frame::after{ bottom:-.9rem; }
 
 .grid{display:grid; gap:var(--gap)}
-.projects-grid{grid-template-columns: repeat(auto-fit, minmax(240px,1fr))}
+/* NEW: адаптивная сетка проектов с auto-fit и minmax */
+/* auto-fit создаёт столько колонок, сколько помещается, каждая минимум 18rem, максимум 1fr */
+.projects-grid{
+  grid-template-columns: repeat(auto-fit, minmax(18rem,1fr));
+}
 
 .card header{font-weight:700; margin-bottom:.5rem}
-.card-img{width:100%; aspect-ratio: 16/9; background:#2e2e2f; border:1px solid var(--fg)}
+/* NEW: изображения карточек с aspect-ratio для предотвращения CLS */
+/* object-fit: cover обеспечивает заполнение контейнера без искажений */
+.card-img{
+  width:100%; 
+  aspect-ratio: 16/9; 
+  background:#2e2e2f; 
+  border:1px solid var(--fg); 
+  object-fit: cover;
+}
 
 .filters{display:flex; gap:.5rem; margin-bottom:var(--gap)}
 .filter-btn{cursor:pointer}
@@ -117,6 +218,7 @@ input, textarea{
   padding:.5rem .6rem;
 }
 .error{color:var(--fg); opacity:.8; min-height:1.2em}
+label > span{font-weight:600}
 
 input:not([type="checkbox"]):not([type="radio"]), textarea { width: 100%; }
 
@@ -142,7 +244,14 @@ input:not([type="checkbox"]):not([type="radio"]), textarea { width: 100%; }
 }
 .modal__close{position:absolute; top:.6rem; right:.6rem}
 
-.site-footer p{margin:0; font-size:.95rem; color:var(--muted)}
+/* NEW: footer с учётом safe-area-inset-bottom для устройств с нижними вырезами */
+.site-footer p{
+  margin:0; 
+  font-size:.95rem; 
+  color:var(--muted); 
+  /* NEW: padding-bottom учитывает safe-area-inset-bottom через CSS переменную */
+  padding-bottom: calc(var(--gap) + var(--safe-bottom));
+}
 
 .ascii-list{margin:0; padding-left:1rem}
 .ascii-list li{padding:.2rem 0; border-left:2px solid var(--fg); padding-left:.6rem}

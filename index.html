@@ -2,12 +2,15 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- NEW: корректный viewport с viewport-fit=cover для поддержки safe-area на устройствах с вырезами -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Портфолио — Линейный стиль</title>
   <link rel="stylesheet" href="styles/styles.css">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
 </head>
 <body>
+  <!-- NEW: skip-link for keyboard users to jump to main content -->
+  <a class="skip-link" href="#main">Перейти к основному содержанию</a>
   <header class="site-header ascii-frame">
   <div class="container">
     <div class="brand">
@@ -22,21 +25,64 @@
   </div>
 </header>
 
-  <main class="container">
+  <!-- NEW: main с id="main" и tabindex="-1" для навигации через skip-link -->
+  <main class="container" id="main" tabindex="-1">
     <section class="hero ascii-frame">
       <div class="hero-grid">
         <div class="hero-photo ascii-frame">
-          <img src="images/placeholder.svg" alt="Моё фото (пример)" class="photo contain" />
+          <!-- NEW: responsive hero image with picture/srcset/sizes to prevent CLS (Cumulative Layout Shift) -->
+          <!-- Используем несколько размеров изображения для адаптивной загрузки -->
+          <picture class="hero-picture">
+            <source srcset="images/placeholder.svg 150w, images/placeholder.svg 200w, images/placeholder.svg 300w" sizes="200px">
+            <!-- NEW: width/height заданы для предотвращения CLS, object-fit: cover в CSS -->
+            <img src="images/placeholder.svg" width="240" height="300" alt="Моё фото (пример)" class="photo contain" loading="lazy" />
+          </picture>
         </div>
         <div class="hero-text">
           <h1>Личный сайт-портфолио</h1>
-          <h4>Майоров Даниил | ЭФБО-04-24</h2>
+          <h4>Майоров Даниил | ЭФБО-04-24</h4>
           <p>Чистая вёрстка с эстетикой линейных символов: <code>_</code> и <code>|</code>.</p>
           <div class="hero-actions">
             <a class="btn ascii-frame" href="pages/projects.html">Перейти к проектам →</a>
             <a class="btn ghost ascii-frame" href="assets/resume.pdf" download>Скачать резюме (PDF)</a>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- NEW: Grid layout for projects showcase using auto-fit/minmax for responsive cards -->
+    <!-- Сетка проектов с адаптивными колонками: минимум 18rem, максимум 1fr -->
+    <section class="ascii-frame">
+      <h2>Последние проекты</h2>
+      <div class="grid projects-grid">
+        <article class="card ascii-frame">
+          <header>Проект A</header>
+          <!-- NEW: responsive image with srcset for different viewport sizes -->
+          <picture>
+            <source srcset="images/placeholder.svg 320w, images/placeholder.svg 480w, images/placeholder.svg 720w" sizes="(min-width: 900px) 320px, (min-width: 600px) 45vw, 90vw">
+            <img src="images/placeholder.svg" width="640" height="360" alt="Проект A" class="card-img" loading="lazy" />
+          </picture>
+          <p>Лэндинг с чистой вёрсткой и модальным окном.</p>
+          <a class="btn ascii-frame" href="pages/projects.html">Подробнее →</a>
+        </article>
+        <article class="card ascii-frame">
+          <header>Проект B</header>
+          <picture>
+            <source srcset="images/placeholder.svg 320w, images/placeholder.svg 480w, images/placeholder.svg 720w" sizes="(min-width: 900px) 320px, (min-width: 600px) 45vw, 90vw">
+            <img src="images/placeholder.svg" width="640" height="360" alt="Проект B" class="card-img" loading="lazy" />
+          </picture>
+          <p>Компоненты интерфейса в стиле ASCII.</p>
+          <a class="btn ascii-frame" href="pages/projects.html">Подробнее →</a>
+        </article>
+        <article class="card ascii-frame">
+          <header>Проект C</header>
+          <picture>
+            <source srcset="images/placeholder.svg 320w, images/placeholder.svg 480w, images/placeholder.svg 720w" sizes="(min-width: 900px) 320px, (min-width: 600px) 45vw, 90vw">
+            <img src="images/placeholder.svg" width="640" height="360" alt="Проект C" class="card-img" loading="lazy" />
+          </picture>
+          <p>Мини-инструмент: генератор прогресс-баров в виде [###---].</p>
+          <a class="btn ascii-frame" href="pages/projects.html">Подробнее →</a>
+        </article>
       </div>
     </section>
 

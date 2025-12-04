@@ -2,13 +2,16 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Портфолио — Линейный стиль</title>
+  <!-- NEW: viewport with viewport-fit=cover for safe-area support on devices with notches -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Портфолио — Линейный стиль</title>
 <link rel="stylesheet" href="../styles/styles.css">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 
 </head>
 <body>
+  <!-- NEW: skip-link for keyboard users to jump to main content -->
+  <a class="skip-link" href="#main">Перейти к основному содержанию</a>
   <header class="site-header ascii-frame">
   <div class="container">
     <div class="brand">
@@ -23,7 +26,9 @@
   </div>
 </header>
 
-  <main class="container">
+  <!-- NEW: main с id="main" и tabindex="-1" для навигации через skip-link -->
+  <!-- tabindex="-1" позволяет программно установить фокус через skip-link -->
+  <main class="container" id="main" tabindex="-1">
     <section class="ascii-frame">
       <h1>Проекты</h1>
       <div class="filters">
@@ -32,25 +37,44 @@
         <button class="filter-btn ascii-frame" data-filter="ui">UI</button>
         <button class="filter-btn ascii-frame" data-filter="tools">Tools</button>
       </div>
+      <!-- NEW: адаптивная сетка проектов с Grid и auto-fit/minmax -->
+      <!-- grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)) создаёт адаптивные колонки -->
       <div class="grid projects-grid">
         <!-- Cards -->
         <article class="card ascii-frame" data-category="web" tabindex="0">
           <header>Проект A</header>
-          <img src="../images/placeholder.svg" alt="Проект A" class="card-img" />
+          <!-- NEW: responsive card image via picture/srcset to cut layout shifts -->
+          <!-- sizes указывает браузеру, какой размер изображения загружать в зависимости от viewport -->
+          <picture>
+            <source srcset="../images/placeholder.svg 320w, ../images/placeholder.svg 480w, ../images/placeholder.svg 720w" sizes="(min-width: 900px) 320px, (min-width: 600px) 45vw, 90vw">
+            <!-- NEW: width/height заданы для предотвращения CLS (Cumulative Layout Shift) -->
+            <img src="../images/placeholder.svg" width="640" height="360" alt="Проект A" class="card-img" loading="lazy" />
+          </picture>
           <p>Лэндинг с чистой вёрсткой и модальным окном.</p>
           <button class="btn ascii-frame open-modal" data-id="a">Открыть</button>
         </article>
 
         <article class="card ascii-frame" data-category="ui" tabindex="0">
           <header>Проект B</header>
-          <img src="../images/placeholder.svg" alt="Проект B" class="card-img" />
+          <!-- NEW: responsive image with srcset/sizes for adaptive loading -->
+          <picture>
+            <source srcset="../images/placeholder.svg 320w, ../images/placeholder.svg 480w, ../images/placeholder.svg 720w" sizes="(min-width: 900px) 320px, (min-width: 600px) 45vw, 90vw">
+            <!-- NEW: width/height для предотвращения CLS -->
+            <img src="../images/placeholder.svg" width="640" height="360" alt="Проект B" class="card-img" loading="lazy" />
+          </picture>
           <p>Компоненты интерфейса в стиле ASCII.</p>
           <button class="btn ascii-frame open-modal" data-id="b">Открыть</button>
         </article>
 
         <article class="card ascii-frame" data-category="tools" tabindex="0">
           <header>Проект C</header>
-          <img src="../images/placeholder.svg" alt="Проект C" class="card-img" />
+          <!-- NEW: responsive image with srcset/sizes for adaptive loading -->
+          <!-- Браузер выберет оптимальный размер изображения на основе sizes и viewport -->
+          <picture>
+            <source srcset="../images/placeholder.svg 320w, ../images/placeholder.svg 480w, ../images/placeholder.svg 720w" sizes="(min-width: 900px) 320px, (min-width: 600px) 45vw, 90vw">
+            <!-- NEW: width/height для предотвращения CLS -->
+            <img src="../images/placeholder.svg" width="640" height="360" alt="Проект C" class="card-img" loading="lazy" />
+          </picture>
           <p>Мини-инструмент: генератор прогресс-баров в виде [###---].</p>
           <button class="btn ascii-frame open-modal" data-id="c">Открыть</button>
         </article>

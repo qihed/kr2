@@ -3,7 +3,8 @@
 
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- NEW: viewport with viewport-fit=cover for safe-area support on devices with notches -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Портфолио — Линейный стиль</title>
   <link rel="stylesheet" href="../styles/styles.css">
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
@@ -11,6 +12,8 @@
 </head>
 
 <body>
+  <!-- NEW: skip-link for keyboard users to jump to main content -->
+  <a class="skip-link" href="#main">Перейти к основному содержанию</a>
   <header class="site-header ascii-frame">
     <div class="container">
       <div class="brand">
@@ -25,7 +28,9 @@
     </div>
   </header>
 
-  <main class="container">
+  <!-- NEW: main с id="main" и tabindex="-1" для навигации через skip-link -->
+  <!-- tabindex="-1" позволяет программно установить фокус через skip-link -->
+  <main class="container" id="main" tabindex="-1">
     <section class="ascii-frame">
       <h1>Дневник</h1>
 
@@ -79,15 +84,19 @@
       <div class="modal__content">
         <h2>Новая задача</h2>
         <form id="addTaskForm">
-          <label class="field">
+          <!-- NEW: proper label with for/id binding for accessibility -->
+          <label class="field" for="task-text">
             <span>Текст задачи</span>
-            <input type="text" name="text" required minlength="2" placeholder="Например: Сделать фильтры...">
-            <small class="error" aria-live="polite"></small>
+            <input type="text" id="task-text" name="text" required minlength="2" placeholder="Например: Сделать фильтры...">
+            <!-- NEW: error message with role="alert" for screen readers -->
+            <!-- role="alert" и aria-live="polite" обеспечивают объявление ошибок для screen readers -->
+            <small class="error" role="alert" aria-live="polite"></small>
           </label>
 
-          <label class="field" style="display:inline-flex; align-items:center; gap:.6rem">
+          <!-- NEW: proper label with for/id binding for checkbox -->
+          <label class="field" for="task-done" style="display:inline-flex; align-items:center; gap:.6rem">
             <span>Отметить выполненной</span>
-            <input type="checkbox" name="done">
+            <input type="checkbox" id="task-done" name="done">
           </label>
 
           <div class="dialog-actions" style="display:flex; gap:.6rem; margin-top:.6rem">
